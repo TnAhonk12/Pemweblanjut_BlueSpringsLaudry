@@ -5,45 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function index()
+    public function showLoginForm()
     {
-        if ($user = Auth::user()) {
-            if ($user->role == 'admin') {
-                return redirect()->intended('dashboard');
-            } elseif ($user->role == 'user') {
-                return redirect()->intended('homepage');
-            }
-        }
-        return view('login');
+        return view('/blue-springs-laundry/login');
     }
 
-    public function proses_login(Request $request)
+    public function login(Request $request)
     {
-        request()->validate(
-            [
-                'username' => 'required',
-                'password' => 'required',
-            ]);
+        $credentials = $request->only('username', 'password');
+        $user = User::where('username', $credentials['username'])->first();
 
-        
-        $kredensil = $request->only('username','password');
-
-            if (Auth::attempt($kredensil)) {
-                $user = Auth::user();
-                if ($user->role == 'admin') {
-                    return redirect()->intended('dashboard');
-                } elseif ($user->role == 'user') {
-                    return redirect()->intended('homepage');
-                }
-                return redirect()->intended('/');
+        if ($user && $credentials['password'] === $user->password) {
+            if ($user->role === 'admin') {
+                // Pengguna dengan role admin
+                // Lakukan sesuatu, misalnya alihkan ke halaman admin
+                return redirect('/blue-springs-laundry/dashboard');
+                
+            } else {
+                // Pengguna dengan role user
+                // Lakukan sesuatu, misalnya alihkan ke halaman user
+                return redirect()->route('user.dashboard');
             }
-
-        return redirect('/blue-springs-laundry/dashboard')
-                                ->withInput()
-                                ->withErrors(['login_gagal' => 'These credentials do not match our records.']);
+        } else {
+            // Kredensial tidak valid
+            // Tampilkan pesan error
+            return back()->withErrors('Invalid credentials');
+            // return redirect()->route('user.dashboard');
+        }
     }
 
     public function logout(Request $request)

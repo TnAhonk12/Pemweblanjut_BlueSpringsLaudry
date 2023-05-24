@@ -111,10 +111,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="{{url('proses_login')}}" class="signin-form" method="POST">
+                            <form method="POST" action="{{ route('login.submit') }}" class="signin-form" >
                                 @csrf
                                 <div class="form-group mt-3">
-                                    <input type="text" class="form-control" name="username" required="" autocomplete="off" required autofocus>
+                                    <input type="text" class="form-control" name="username" value="{{ old('username') }}" required="" autocomplete="off" required autofocus>
                                     <label class="form-control-placeholder" for="username">Username</label>
                                 </div>
                                 <div class="form-group">

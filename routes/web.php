@@ -6,6 +6,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,19 +30,38 @@ Route::get('/blue-springs-laundry/login', function () {
     return view('login');
 });
 
-Route::get('login', 'App\Http\Controllers\AuthController@index')->name('login');
-// Route::get('register', 'App\Http\Controllers\AuthController@register')->name('register');
-Route::post('proses_login', 'App\Http\Controllers\AuthController@proses_login')->name('proses_login');
-Route::get('logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
+// proses login
+// Route::get('/blue-springs-laundry/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
+// Route::post('/blue-springs-laundry/login', [App\Http\Controllers\AuthController::class, 'showLoginForm']);
+// Route::post('/blue-springs-laundry/login', [App\Http\Controllers\AuthController::class, 'login']);
+// Route::post('/blue-springs-laundry/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
+// Route::get('/blue-springs-laundry/login', 'App\Http\Controllers\AuthController@showLoginForm')->name('login');
+Route::post('/blue-springs-laundry/login', 'App\Http\Controllers\AuthController@login')->name('login.submit');
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => ['cek_login:admin']], function () {
-        Route::resource('/blue-springs-laundry/dashboard', DashboardController::class);
-    });
-    Route::group(['middleware' => ['cek_login:user']], function () {
-        return view('homepage');
-    });
-});
+
+Route::get('/blue-springs-laundry/dashboard', function () {
+    // Halaman dashboard admin
+})->name('admin.dashboard');
+
+Route::get('/', function () {
+    return view('homepage');
+    // Halaman dashboard user
+})->name('user.dashboard');
+
+
+// Route::get('login', 'App\Http\Controllers\AuthController@index')->name('index');
+// // Route::get('register', 'App\Http\Controllers\AuthController@register')->name('register');
+// Route::post('proses_login', 'App\Http\Controllers\AuthController@proses_login')->name('proses_login');
+// Route::get('logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
+
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::group(['middleware' => ['cek_login:admin']], function () {
+//         Route::resource('/blue-springs-laundry/dashboard', DashboardController::class);
+//     });
+//     Route::group(['middleware' => ['cek_login:user']], function () {
+//         return view('homepage');
+//     });
+// });
 
 //Register
 Route::get('/blue-springs-laundry/register', function () {
