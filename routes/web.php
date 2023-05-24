@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,14 @@ Route::get('/blue-sprints-laundry/user', function () {
     // Halaman dashboard user
 })->name('user.dashboard');
 
+Route::get('/home', function () {
+    $name = Auth::user()->name;
+    return view('homepageuser', compact('name'));
+})->middleware('auth');
+
+//Show Nama
+Route::get('/homepageuser', [HomeController::class, 'index'])->name('homepageuser');
+// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 // Route::get('login', 'App\Http\Controllers\AuthController@index')->name('index');
 // // Route::get('register', 'App\Http\Controllers\AuthController@register')->name('register');

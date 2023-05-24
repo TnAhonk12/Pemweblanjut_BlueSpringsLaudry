@@ -68,42 +68,17 @@ https://templatemo.com/tm-563-seo-dream
               <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
               <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
               <div class="ms-md-3">
-                            @guest
-                                @if (Route::currentRouteName() != 'login')
-                                    <li class="nav-item">
-                                        <a class="btn btn-secondary fw-semibold text-light" href="{{ route('login') }}">{{ __('Masuk') }}</a>
-                                    </li>
-                                @endif
-
-                                @if (Route::currentRouteName() == 'login')
-                                    <li class="nav-item">
-                                        <a class="btn btn-secondary fw-semibold text-light" href="{{ route('register') }}">{{ __('Daftar') }}</a>
-                                    </li>
-                                @endif
-                            @else
-                                <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ explode(" ", Auth::user()->name)[0] }}
-                                    </a>
-
+                                    {{ $name }}
+                                    </a>   
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('profile') }}">Profile
-                                        </a> 
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
+                                    <a class="dropdown-item d-flex align-items-center" href="/blue-springs-laundry/login">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+                                    </div>           
                                 </li>
-                            @endguest
-                        </div>
-              
-            </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
             </a>
