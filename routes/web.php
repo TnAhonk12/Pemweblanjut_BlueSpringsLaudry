@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('homepage');
 });
+//Homepage User Logged in
+Route::get('/blue-sprints-laundry/user', function () {
+    return view('homepageuser');
+});
 
 //Login
 Route::get('/blue-springs-laundry/login', function () {
@@ -43,8 +47,8 @@ Route::get('/blue-springs-laundry/dashboard', function () {
     // Halaman dashboard admin
 })->name('admin.dashboard');
 
-Route::get('/', function () {
-    return view('homepage');
+Route::get('/blue-sprints-laundry/user', function () {
+    return view('homepageuser');
     // Halaman dashboard user
 })->name('user.dashboard');
 
